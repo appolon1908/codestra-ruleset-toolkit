@@ -1,0 +1,113 @@
+{
+  "owner": "appolon1908-hue",
+  "ruleset_name": "server65-default-branch-gates",
+  "repos": {
+    "codestra-production-platform": {
+      "approvals": 0,
+      "checks": [
+        "checks-only-policy",
+        "diagnose",
+        "production-gate",
+        "validate"
+      ],
+      "note": "Deliberately checks-only: approvals=0 since 2026-09-07, gated by 4 required checks incl. production-gate. Raising approvals here is a policy decision, not a fix."
+    },
+    "Middleware-": {
+      "approvals": 1,
+      "checks": [],
+      "note": "Also covered by middleware-main-production-authority (11 checks)."
+    },
+    "Odoo": {
+      "approvals": 1,
+      "checks": [
+        "Test Odoo 19 and PostgreSQL runtime",
+        "Validate Odoo merge result",
+        "Validate Odoo source head",
+        "dependency-review",
+        "secret-and-source-security"
+      ]
+    },
+    "N8N": {
+      "approvals": 1,
+      "checks": [],
+      "note": "Also covered by 'Protect main without bypass' (1 approval + exact-SHA check)."
+    },
+    "Kong": {
+      "approvals": 1,
+      "checks": [
+        "kong-config",
+        "security",
+        "validate"
+      ]
+    },
+    "Keycloak": {
+      "approvals": 1,
+      "checks": [],
+      "note": "Also covered by 'Bootstrap protect main'."
+    },
+    "Caddy": {
+      "approvals": 1,
+      "checks": [],
+      "note": "Also covered by 'Protect main'."
+    },
+    "Codestra-AI": {
+      "approvals": 1,
+      "checks": [
+        "container-build",
+        "postgres-certification",
+        "unit-and-contract"
+      ]
+    },
+    "Codesrea-Social-": {
+      "approvals": 1,
+      "checks": [
+        "postgres-certification",
+        "unit-and-contract"
+      ]
+    },
+    "Codestra-Communication-CC": {
+      "approvals": 1,
+      "checks": [
+        "container-build",
+        "postgres-certification",
+        "unit-and-contract"
+      ]
+    },
+    "Codestra-Marketing-": {
+      "approvals": 1,
+      "checks": [
+        "container-build",
+        "postgres-certification",
+        "unit-and-contract"
+      ]
+    },
+    "Infustruction-repo": {
+      "approvals": 1,
+      "checks": [
+        "orchestrator-contract",
+        "validate",
+        "validate-merge-result",
+        "validate-source"
+      ]
+    },
+    "SDK-repository": {
+      "approvals": 1,
+      "checks": [
+        "certify",
+        "compatibility",
+        "generate",
+        "moneybee-python-connectors",
+        "secret-scan",
+        "validate",
+        "verify"
+      ]
+    },
+    "social.codestra.co": {
+      "approvals": 1,
+      "checks": [
+        "Backend container build and hardening",
+        "Backend policy, migration, test, and build"
+      ]
+    }
+  }
+}

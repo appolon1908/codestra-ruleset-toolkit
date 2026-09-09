@@ -1,0 +1,16 @@
+{
+  "Infustruction-repo": [
+    "validate",
+    "validate-source",
+    "validate-merge-result"
+  ],
+  "SDK-repository": [
+    "secret-scan",
+    "moneybee-python-connectors",
+    "verify",
+    "compatibility",
+    "validate",
+    "certify",
+    "generate"
+  ]
+}

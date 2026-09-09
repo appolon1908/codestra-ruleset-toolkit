@@ -1,0 +1,13 @@
+{
+  "Odoo": [
+    "Validate Odoo source head",
+    "Validate Odoo merge result",
+    "Test Odoo 19 and PostgreSQL runtime",
+    "secret-and-source-security",
+    "dependency-review"
+  ],
+  "social.codestra.co": [
+    "Backend policy, migration, test, and build",
+    "Backend container build and hardening"
+  ]
+}
