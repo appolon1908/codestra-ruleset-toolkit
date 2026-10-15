@@ -1,7 +1,7 @@
 # GitHub ruleset tooling — server65 repo set
 
 Cross-repo scripts that manage and monitor the `server65-default-branch-gates`
-ruleset across 14 `appolon1908-hue` repositories. Everything talks to GitHub via
+ruleset across 14 `appolon1908` repositories. Everything talks to GitHub via
 `gh api`; nothing is tied to a particular clone.
 
 Requires `gh` authenticated with `repo` + `workflow` scope, and Python 3 (plus
@@ -42,6 +42,28 @@ identified.
   per repo, with notes where a value is deliberate.
 - `test_rulesetlib.py` — unit tests, no network:
   `python -m unittest test_rulesetlib -v`
+
+## Offline source validation
+
+```bash
+bash validate-source.sh
+```
+
+This checks root Python/JSON syntax, shell syntax, Python unit and identity
+regressions, and the shell classification cases. It needs Python 3, Bash and
+standard shell utilities, but no GitHub credentials, network calls or package
+installation. Audit and apply entrypoints are parsed, not executed.
+
+The existing monitoring-record workflow runs this validation on every pull
+request, including documentation-only changes, before checking the monitoring
+identity contract. Its checkout remains pinned to the exact source head and
+credentials are not persisted. This is source validation, not a replacement
+for the independently authorized `codestra-control-plane` publisher.
+
+The harness regressions deliberately alter expectations only in temporary
+fixtures. Both early and final mismatches must exit nonzero. Historical pinned
+monitoring URLs and one-time rollout scripts remain unchanged; runtime
+activation remains disabled.
 
 ## Drift detection
 

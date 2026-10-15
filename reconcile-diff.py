@@ -2,7 +2,7 @@
 protection checks, so the two systems can be reconciled to one answer."""
 import json
 
-OWNER = "appolon1908-hue"
+OWNER = "appolon1908"
 NAME = "server65-default-branch-gates"
 
 REPOS = [

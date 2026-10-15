@@ -6,7 +6,7 @@ ruleset's required checks, so conflicts and hidden gates are visible.
 """
 import json
 
-OWNER = "appolon1908-hue"
+OWNER = "appolon1908"
 NAME = "server65-default-branch-gates"
 
 REPOS = [
