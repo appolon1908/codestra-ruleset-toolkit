@@ -3,7 +3,7 @@ checks and last-updated time. Use this to detect concurrent automation
 replacing or renaming rulesets."""
 import json
 
-OWNER = "appolon1908-hue"
+OWNER = "appolon1908"
 REPOS = [
     "codestra-production-platform", "Middleware-", "Odoo", "N8N", "Kong",
     "Keycloak", "Caddy", "Codestra-AI", "Codesrea-Social-",
