@@ -127,7 +127,7 @@ def gh_api(method, endpoint, payload=None):
 
 
 def check_runs(api, repository, sha):
-    response = api('GET', f'repos/{repository}/commits/{sha}/check-runs?per_page=100')
+    response = api('GET', f'repos/{repository}/commits/{sha}/check-runs?per_page=100&filter=all')
     runs = response['check_runs']
     if response['total_count'] != len(runs):
         raise ValueError('Check evidence is paginated; provide a narrower reviewed migration')

@@ -116,7 +116,7 @@ class MigrationTests(unittest.TestCase):
         def api(method, endpoint, payload=None):
             nonlocal state
             calls.append((method, endpoint))
-            if endpoint.endswith('/check-runs?per_page=100'):
+            if endpoint.endswith('/check-runs?per_page=100&filter=all'):
                 return {'total_count': 1, 'check_runs': [check_run()]}
             if method == 'PUT':
                 state = copy.deepcopy(payload)
@@ -188,6 +188,17 @@ class MigrationTests(unittest.TestCase):
         with self.assertRaises(ValueError):
             release.check_runs(lambda *args: {'total_count': 101, 'check_runs': [check_run()]},
                                'appolon1908/Backstage', SHA)
+
+    def test_api_requests_all_attempts_so_rerun_cannot_hide_failed_evidence(self):
+        def api(method, endpoint):
+            if 'filter=all' in endpoint:
+                runs = [check_run(), check_run(id=21, conclusion='failure')]
+            else:
+                runs = [check_run()]
+            return {'total_count': len(runs), 'check_runs': runs}
+        runs = release.check_runs(api, 'appolon1908/Backstage', SHA)
+        with self.assertRaises(ValueError):
+            release.verify_evidence(runs, SHA, [CHECK], NOW)
 
     def test_existing_different_publisher_is_not_overwritten(self):
         before = ruleset()
