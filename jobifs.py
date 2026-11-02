@@ -1,5 +1,5 @@
 import base64, json, subprocess, sys, yaml
-OWNER="appolon1908-hue"
+OWNER="appolon1908"
 def gh(*a):
     p=subprocess.run(["gh",*a],capture_output=True,text=True)
     if p.returncode: raise RuntimeError(p.stderr.strip()[:200])

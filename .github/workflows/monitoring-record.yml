@@ -1,10 +1,6 @@
 name: Validate monitoring onboarding record
 on:
   pull_request:
-    paths:
-      - MONITORING-INTEGRATION.md
-      - monitoring-integration.v1.json
-      - .github/workflows/monitoring-record.yml
   workflow_dispatch:
 permissions:
   contents: read
@@ -17,6 +13,8 @@ jobs:
         with:
           ref: ${{ github.event.pull_request.head.sha || github.sha }}
           persist-credentials: false
+      - name: Run offline source regression tests
+        run: bash validate-source.sh
       - name: Verify source and onboarding contract
         env:
           EXPECTED_HEAD: ${{ github.event.pull_request.head.sha || github.sha }}

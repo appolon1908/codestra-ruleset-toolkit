@@ -3,7 +3,7 @@ all active rulesets, plus classic protection. Answers 'can a PR merge here with
 zero human review?'"""
 import json
 
-OWNER = "appolon1908-hue"
+OWNER = "appolon1908"
 REPOS = [
     "codestra-production-platform", "Middleware-", "Odoo", "N8N", "Kong",
     "Keycloak", "Caddy", "Codestra-AI", "Codesrea-Social-",

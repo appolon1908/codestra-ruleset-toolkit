@@ -3,6 +3,8 @@
 # against representative check-run tables. Input format: name<TAB>status<TAB>conclusion
 set -uo pipefail
 
+failures=0
+
 classify() {
   local all="$1"
   local pending failed
@@ -25,7 +27,10 @@ t() {
   local got; got=$(classify "$data")
   local head="${got%%:*}"; local exp="${expect%%:*}"
   if [ "$head" = "$exp" ]; then echo "  ok   $desc => $got"
-  else echo "  FAIL $desc => got '$got', expected '$expect'"; fi
+  else
+    echo "  FAIL $desc => got '$got', expected '$expect'"
+    failures=$((failures + 1))
+  fi
 }
 
 echo "gate classification tests:"
@@ -47,3 +52,10 @@ t "matrix job failing" "FAIL" \
   "$(printf 'build (reseller-portal, deploy/reseller-portal/Dockerfile)\tcompleted\tfailure')"
 t "mixed: skipped + running" "WAIT" \
   "$(printf 'a\tcompleted\tskipped\nb\tin_progress\t-\nc\tcompleted\tsuccess')"
+
+# Report every case, but never mask an earlier failed expectation.
+if [ "$failures" -gt 0 ]; then
+  printf "%s gate expectation(s) failed\n" "$failures" >&2
+  exit 1
+fi
+exit 0
