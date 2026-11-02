@@ -90,6 +90,9 @@ class MigrationTests(unittest.TestCase):
         with self.assertRaises(ValueError):
             release.verify_evidence([check_run(), check_run(id=21, conclusion='failure')], SHA, [CHECK], NOW)
 
+    def test_push_and_pull_request_successes_for_same_commit_are_accepted(self):
+        release.verify_evidence([check_run(), check_run(id=21)], SHA, [CHECK], NOW)
+
     def test_concurrent_ruleset_change_refused_before_write(self):
         original = ruleset()
         plan = release.make_plan('appolon1908/Backstage', original, [CHECK], SHA,

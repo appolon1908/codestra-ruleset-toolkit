@@ -44,9 +44,10 @@ python3 interim_release.py apply plan.json
 python3 interim_release.py apply plan.json --apply --backup-dir /secure/release-backups
 ```
 
-Planning and applying require exactly one successful check run for each
-context/publisher on the specified SHA, completed within one hour. Skipped,
-cancelled, neutral, absent, ambiguous or stale evidence is rejected. Plans expire
+Planning and applying require at least one successful check run for each
+context/publisher on the specified SHA, completed within one hour. When push and
+pull-request events both run, every matching run must succeed. Skipped,
+cancelled, neutral, absent or stale evidence is rejected. Plans expire
 after one hour. Generate a separate plan for each ruleset; inspect every diff.
 The apply path validates that its payload is precisely the allowed replacement,
 checks live state twice, writes an exclusive rollback record before mutation and

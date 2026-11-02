@@ -89,14 +89,16 @@ def verify_evidence(runs, sha, checks, now):
     for check in checks:
         matches = [run for run in runs if run.get('name') == check['context']
                    and run.get('app', {}).get('id') == check['integration_id']]
-        if len(matches) != 1:
-            raise ValueError(f'Missing or ambiguous check evidence: {check["context"]}')
-        run = matches[0]
-        if run.get('head_sha') != sha or run.get('status') != 'completed' or run.get('conclusion') != 'success':
-            raise ValueError(f'Check did not succeed on exact SHA: {check["context"]}')
-        age = now - parse_time(run['completed_at'])
-        if age < timedelta(0) or age > MAX_AGE:
-            raise ValueError('Check evidence must be no more than one hour old and not in the future')
+        if not matches:
+            raise ValueError(f'Missing check evidence: {check["context"]}')
+        # The same revision can legitimately have both push and PR check runs.
+        # Every matching run must pass; a success never hides a pending/failing run.
+        for run in matches:
+            if run.get('head_sha') != sha or run.get('status') != 'completed' or run.get('conclusion') != 'success':
+                raise ValueError(f'Check did not succeed on exact SHA: {check["context"]}')
+            age = now - parse_time(run['completed_at'])
+            if age < timedelta(0) or age > MAX_AGE:
+                raise ValueError('Check evidence must be no more than one hour old and not in the future')
 
 
 def make_plan(repository, before, checks, sha, runs, now):
