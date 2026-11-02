@@ -93,12 +93,17 @@ def verify_evidence(runs, sha, checks, now):
             raise ValueError(f'Missing check evidence: {check["context"]}')
         # The same revision can legitimately have both push and PR check runs.
         # Every matching run must pass; a success never hides a pending/failing run.
+        fresh_success = False
         for run in matches:
             if run.get('head_sha') != sha or run.get('status') != 'completed' or run.get('conclusion') != 'success':
                 raise ValueError(f'Check did not succeed on exact SHA: {check["context"]}')
             age = now - parse_time(run['completed_at'])
-            if age < timedelta(0) or age > MAX_AGE:
-                raise ValueError('Check evidence must be no more than one hour old and not in the future')
+            if age < timedelta(0):
+                raise ValueError('Check evidence must not be in the future')
+            if age <= MAX_AGE:
+                fresh_success = True
+        if not fresh_success:
+            raise ValueError('At least one successful check must be no more than one hour old')
 
 
 def make_plan(repository, before, checks, sha, runs, now):
