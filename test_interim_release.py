@@ -76,6 +76,30 @@ class MigrationTests(unittest.TestCase):
     def test_valid_exact_commit_evidence(self):
         release.verify_evidence([check_run()], SHA, [CHECK], NOW)
 
+    def test_old_success_with_fresh_success_is_valid_in_either_order(self):
+        old = check_run(id=21, completed_at='2026-11-01T13:55:00Z')
+        for runs in ([old, check_run()], [check_run(), old]):
+            with self.subTest(runs=runs):
+                release.verify_evidence(runs, SHA, [CHECK], NOW)
+
+    def test_old_nonpassing_attempt_cannot_be_hidden_by_fresh_success(self):
+        for status, conclusion in [('completed', 'failure'), ('completed', 'skipped'),
+                                   ('in_progress', None)]:
+            old = check_run(id=21, status=status, conclusion=conclusion,
+                            completed_at='2026-11-01T13:55:00Z')
+            with self.subTest(status=status, conclusion=conclusion), self.assertRaises(ValueError):
+                release.verify_evidence([old, check_run()], SHA, [CHECK], NOW)
+
+    def test_old_success_only_has_no_fresh_evidence(self):
+        with self.assertRaises(ValueError):
+            release.verify_evidence([check_run(completed_at='2026-11-01T13:55:00Z')],
+                                    SHA, [CHECK], NOW)
+
+    def test_future_success_cannot_be_hidden_by_fresh_success(self):
+        with self.assertRaises(ValueError):
+            release.verify_evidence([check_run(), check_run(id=21, completed_at='2026-11-03T13:55:00Z')],
+                                    SHA, [CHECK], NOW)
+
     def test_missing_failed_skipped_cancelled_and_wrong_sha_refused(self):
         cases = [[], [check_run(conclusion='failure')], [check_run(conclusion='skipped')],
                  [check_run(conclusion='cancelled')], [check_run(status='in_progress')],
