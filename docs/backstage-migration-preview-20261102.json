@@ -1,0 +1,220 @@
+{
+  "status": "PREVIEW_NOT_APPLIED",
+  "gate_pr": "https://github.com/appolon1908/Backstage/pull/9",
+  "holds": [
+    "Gate PR must be independently approved and merged",
+    "Protected branches and classic protection require reconciliation",
+    "Settings mutation needs an administration-capable tool",
+    "Regenerate plans with fresh hosted evidence before apply"
+  ],
+  "plans": [
+    {
+      "schema_version": 1,
+      "repository": "appolon1908/Backstage",
+      "ruleset_id": 24625080,
+      "created_at": "2026-11-02T13:26:04.394770+00:00",
+      "evidence_sha": "9fce79c78aef15d96b23996c218e2febd368694e",
+      "checks": [
+        {
+          "context": "codestra/repository-validation",
+          "integration_id": 15368
+        }
+      ],
+      "before": {
+        "name": "codestra-control-plane-required",
+        "target": "branch",
+        "enforcement": "active",
+        "conditions": {
+          "ref_name": {
+            "exclude": [],
+            "include": [
+              "~DEFAULT_BRANCH",
+              "refs/heads/development",
+              "refs/heads/testing",
+              "refs/heads/staging",
+              "refs/heads/production",
+              "refs/heads/section/*",
+              "refs/heads/subsection/*"
+            ]
+          }
+        },
+        "rules": [
+          {
+            "type": "required_status_checks",
+            "parameters": {
+              "strict_required_status_checks_policy": true,
+              "do_not_enforce_on_create": false,
+              "required_status_checks": [
+                {
+                  "context": "codestra-control-plane"
+                }
+              ]
+            }
+          }
+        ],
+        "bypass_actors": []
+      },
+      "after": {
+        "name": "codestra-control-plane-required",
+        "target": "branch",
+        "enforcement": "active",
+        "conditions": {
+          "ref_name": {
+            "exclude": [],
+            "include": [
+              "~DEFAULT_BRANCH",
+              "refs/heads/development",
+              "refs/heads/testing",
+              "refs/heads/staging",
+              "refs/heads/production",
+              "refs/heads/section/*",
+              "refs/heads/subsection/*"
+            ]
+          }
+        },
+        "rules": [
+          {
+            "type": "required_status_checks",
+            "parameters": {
+              "strict_required_status_checks_policy": true,
+              "do_not_enforce_on_create": false,
+              "required_status_checks": [
+                {
+                  "context": "codestra/repository-validation",
+                  "integration_id": 15368
+                }
+              ]
+            }
+          }
+        ],
+        "bypass_actors": []
+      },
+      "before_sha256": "fe6860f317610c01a256c412f3bd429ce830a9d1ae0b1173176ed00f91e230ec"
+    },
+    {
+      "schema_version": 1,
+      "repository": "appolon1908/Backstage",
+      "ruleset_id": 24624155,
+      "created_at": "2026-11-02T13:26:04.395001+00:00",
+      "evidence_sha": "9fce79c78aef15d96b23996c218e2febd368694e",
+      "checks": [
+        {
+          "context": "codestra/repository-validation",
+          "integration_id": 15368
+        }
+      ],
+      "before": {
+        "name": "codestra-control-plane-required-v1",
+        "target": "branch",
+        "enforcement": "active",
+        "conditions": {
+          "ref_name": {
+            "exclude": [],
+            "include": [
+              "refs/heads/development",
+              "refs/heads/testing",
+              "refs/heads/staging",
+              "refs/heads/production",
+              "refs/heads/section/*",
+              "refs/heads/workstation/*"
+            ]
+          }
+        },
+        "rules": [
+          {
+            "type": "deletion"
+          },
+          {
+            "type": "non_fast_forward"
+          },
+          {
+            "type": "pull_request",
+            "parameters": {
+              "required_approving_review_count": 1,
+              "dismiss_stale_reviews_on_push": true,
+              "required_reviewers": [],
+              "require_code_owner_review": false,
+              "require_last_push_approval": false,
+              "required_review_thread_resolution": true,
+              "require_extra_approval_for_unattributed_changes": true,
+              "allowed_merge_methods": [
+                "squash",
+                "merge"
+              ]
+            }
+          },
+          {
+            "type": "required_status_checks",
+            "parameters": {
+              "strict_required_status_checks_policy": true,
+              "do_not_enforce_on_create": true,
+              "required_status_checks": [
+                {
+                  "context": "codestra/control-plane"
+                }
+              ]
+            }
+          }
+        ],
+        "bypass_actors": []
+      },
+      "after": {
+        "name": "codestra-control-plane-required-v1",
+        "target": "branch",
+        "enforcement": "active",
+        "conditions": {
+          "ref_name": {
+            "exclude": [],
+            "include": [
+              "refs/heads/development",
+              "refs/heads/testing",
+              "refs/heads/staging",
+              "refs/heads/production",
+              "refs/heads/section/*",
+              "refs/heads/workstation/*"
+            ]
+          }
+        },
+        "rules": [
+          {
+            "type": "deletion"
+          },
+          {
+            "type": "non_fast_forward"
+          },
+          {
+            "type": "pull_request",
+            "parameters": {
+              "required_approving_review_count": 1,
+              "dismiss_stale_reviews_on_push": true,
+              "required_reviewers": [],
+              "require_code_owner_review": false,
+              "require_last_push_approval": false,
+              "required_review_thread_resolution": true,
+              "require_extra_approval_for_unattributed_changes": true,
+              "allowed_merge_methods": [
+                "squash",
+                "merge"
+              ]
+            }
+          },
+          {
+            "type": "required_status_checks",
+            "parameters": {
+              "strict_required_status_checks_policy": true,
+              "do_not_enforce_on_create": true,
+              "required_status_checks": [
+                {
+                  "context": "codestra/repository-validation",
+                  "integration_id": 15368
+                }
+              ]
+            }
+          }
+        ],
+        "bypass_actors": []
+      },
+      "before_sha256": "17a99150d4041ddb7992143b621b8200cb530cf5998d0d7ea04cf26931d6a876"
+    }
+  ]
+}
